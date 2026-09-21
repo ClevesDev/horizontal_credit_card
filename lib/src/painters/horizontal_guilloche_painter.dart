@@ -13,8 +13,8 @@ class HorizontalGuillochePainter extends CustomPainter {
 
   /// Creates a [HorizontalGuillochePainter].
   const HorizontalGuillochePainter({
-    this.primaryColor = const Color(0x1A86EFAC),
-    this.accentColor = const Color(0x2286EFAC),
+    this.primaryColor = const Color(0x0E86EFAC),
+    this.accentColor = const Color(0x1586EFAC),
   });
 
   @override

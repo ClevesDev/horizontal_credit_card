@@ -225,10 +225,10 @@ class _HorizontalCardState extends State<HorizontalCard>
         // 3D perspective rotation matrix
         final angle = _flipAnimation.value * math.pi;
         final transform = Matrix4.identity()
-          ..setEntry(3, 2, 0.0015)
+          ..setEntry(3, 2, 0.0010)
           ..rotateY(angle)
-          ..rotateX(-activeTiltX * 0.18)
-          ..rotateY(activeTiltY * 0.22);
+          ..rotateX(-activeTiltX * 0.16)
+          ..rotateY(activeTiltY * 0.20);
 
         return Listener(
           onPointerMove: (e) => _onPointerMove(e, cardSize),

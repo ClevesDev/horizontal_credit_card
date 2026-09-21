@@ -238,8 +238,7 @@ class HorizontalCardFront extends StatelessWidget {
     );
   }
 
-  /// Calculates tactile chiseled bevel shadows and physical relief based on finish
-  /// and interactive gyroscopic 3D tilt coordinates.
+  /// Calculates tactile chiseled bevel shadows and physical relief based on finish.
   List<Shadow> _getTextShadows(
     CardTextFinish finish,
     Color baseTextColor,
@@ -249,66 +248,63 @@ class HorizontalCardFront extends StatelessWidget {
     switch (finish) {
       case CardTextFinish.embossed:
         // Physical 3D Letterpress Embossed Relief:
-        // Upper-left specular bevel catches light dynamically based on tilt;
-        // lower-right cast shadow creates tangible depth punched from behind.
-        final specularAlpha = (0.75 + (tiltX * 0.2)).clamp(0.4, 0.95);
-        final shadowAlpha = (0.85 - (tiltX * 0.1)).clamp(0.6, 0.95);
-
-        return [
-          // Specular Bevel Highlight (Top-Left)
+        // Razor-sharp upper-left bevel highlight and crisp lower-right cavity shadow.
+        // Fixed offsets prevent jitter/ghosting during 3D card tilt.
+        return const [
+          // Crisp specular bevel highlight on upper-left edge
           Shadow(
-            color: Colors.white.withValues(alpha: specularAlpha),
-            offset: Offset(-1.2 - (tiltX * 0.4), -1.2 - (tiltY * 0.4)),
-            blurRadius: 1.0,
+            color: Color(0xD0FFFFFF),
+            offset: Offset(-0.8, -0.8),
+            blurRadius: 0.0,
           ),
-          // Deep Physical Cavity Drop Shadow (Bottom-Right)
+          // Deep physical cavity drop shadow on lower-right edge
           Shadow(
-            color: Colors.black.withValues(alpha: shadowAlpha),
-            offset: Offset(1.6 - (tiltX * 0.4), 1.8 - (tiltY * 0.4)),
-            blurRadius: 2.0,
+            color: Color(0xDE000000),
+            offset: Offset(1.2, 1.4),
+            blurRadius: 0.8,
           ),
-          // Intermediate Chisel Edge Extrusion
+          // Subtle ambient depth shadow
           Shadow(
-            color: Colors.black.withValues(alpha: 0.45),
-            offset: const Offset(0.5, 0.8),
-            blurRadius: 0.5,
+            color: Color(0x66000000),
+            offset: Offset(0.4, 0.6),
+            blurRadius: 0.0,
           ),
         ];
 
       case CardTextFinish.goldFoil:
-        return [
+        return const [
           Shadow(
-            color: const Color(0xFFFFE082).withValues(alpha: 0.6),
-            offset: Offset(-0.8 - (tiltX * 0.3), -0.8 - (tiltY * 0.3)),
-            blurRadius: 1.2,
+            color: Color(0x99FFE082),
+            offset: Offset(-0.8, -0.8),
+            blurRadius: 0.5,
           ),
           Shadow(
-            color: Colors.black.withValues(alpha: 0.65),
-            offset: const Offset(1.2, 1.4),
-            blurRadius: 2.0,
+            color: Color(0xAA000000),
+            offset: Offset(1.0, 1.2),
+            blurRadius: 1.0,
           ),
         ];
 
       case CardTextFinish.silverFoil:
-        return [
+        return const [
           Shadow(
-            color: Colors.white.withValues(alpha: 0.7),
-            offset: Offset(-0.8 - (tiltX * 0.3), -0.8 - (tiltY * 0.3)),
-            blurRadius: 1.2,
+            color: Color(0xB3FFFFFF),
+            offset: Offset(-0.8, -0.8),
+            blurRadius: 0.5,
           ),
           Shadow(
-            color: Colors.black.withValues(alpha: 0.65),
-            offset: const Offset(1.2, 1.4),
-            blurRadius: 2.0,
+            color: Color(0xAA000000),
+            offset: Offset(1.0, 1.2),
+            blurRadius: 1.0,
           ),
         ];
 
       case CardTextFinish.flat:
-        return [
+        return const [
           Shadow(
-            color: Colors.black.withValues(alpha: 0.35),
-            offset: const Offset(0, 1.2),
-            blurRadius: 2.0,
+            color: Color(0x59000000),
+            offset: Offset(0, 1.0),
+            blurRadius: 1.5,
           ),
         ];
     }

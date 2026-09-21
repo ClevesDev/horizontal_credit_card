@@ -1,8 +1,7 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-/// Renders a dynamic specular lighting reflection that sweeps across the
-/// landscape card surface according to the 3D tilt coordinates.
+/// Renders a dynamic, realistic specular lighting reflection that glides across
+/// the card surface according to 3D tilt coordinates using hardware screen/overlay blending.
 class HorizontalSpecularGlarePainter extends CustomPainter {
   /// The current X-axis tilt coordinate (-1.0 to 1.0).
   final double tiltX;
@@ -32,29 +31,53 @@ class HorizontalSpecularGlarePainter extends CustomPainter {
     final rrect = borderRadius.toRRect(rect);
     canvas.clipRRect(rrect);
 
-    // Calculate light source focal center
-    final centerX = size.width * (0.5 - tiltY * 0.4);
-    final centerY = size.height * (0.5 + tiltX * 0.4);
-    final radius = math.max(size.width, size.height) * 0.85;
+    final w = size.width;
+    final h = size.height;
 
-    final paint = Paint()
+    // Light focal center glides opposite to tilt deflection
+    final lightCenterX = w * 0.5 - (tiltY * w * 0.7);
+    final lightCenterY = h * 0.5 + (tiltX * h * 0.7);
+
+    // 1. Soft Ambient Radial Light Sheen (BlendMode.screen preserves contrast)
+    final radialPaint = Paint()
       ..shader = RadialGradient(
         center: Alignment(
-          (centerX / size.width) * 2 - 1,
-          (centerY / size.height) * 2 - 1,
+          ((lightCenterX / w) * 2 - 1).clamp(-1.2, 1.2),
+          ((lightCenterY / h) * 2 - 1).clamp(-1.2, 1.2),
         ),
-        radius: 0.9,
+        radius: 0.85,
         colors: [
-          glareColor,
+          glareColor.withValues(alpha: 0.18),
+          glareColor.withValues(alpha: 0.06),
           glareColor.withValues(alpha: 0.0),
         ],
-        stops: const [0.0, 1.0],
-      ).createShader(Rect.fromCircle(
-        center: Offset(centerX, centerY),
-        radius: radius,
-      ));
+        stops: const [0.0, 0.45, 1.0],
+      ).createShader(rect)
+      ..blendMode = BlendMode.screen;
 
-    canvas.drawRect(rect, paint);
+    canvas.drawRect(rect, radialPaint);
+
+    // 2. Diagonal Specular Flare Streak (Sleek light gleam across landscape card)
+    final streakPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment(
+          -1.0 + (tiltY * 1.5),
+          -1.0 - (tiltX * 1.5),
+        ),
+        end: Alignment(
+          1.0 + (tiltY * 1.5),
+          1.0 - (tiltX * 1.5),
+        ),
+        colors: [
+          Colors.white.withValues(alpha: 0.0),
+          Colors.white.withValues(alpha: 0.14),
+          Colors.white.withValues(alpha: 0.0),
+        ],
+        stops: const [0.35, 0.50, 0.65],
+      ).createShader(rect)
+      ..blendMode = BlendMode.overlay;
+
+    canvas.drawRect(rect, streakPaint);
   }
 
   @override
