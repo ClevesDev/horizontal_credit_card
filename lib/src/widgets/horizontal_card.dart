@@ -60,6 +60,15 @@ class HorizontalCard extends StatefulWidget {
   /// Optional external controller for dynamic rolling CVV.
   final DynamicCvvController? dynamicCvvController;
 
+  /// Displays a subtle copy-to-clipboard button next to the card number.
+  final bool enableCopy;
+
+  /// Whether to remove whitespace when copying card number (true) or retain spacing (false).
+  final bool cleanCopiedNumber;
+
+  /// Callback fired when the card number is copied to clipboard.
+  final ValueChanged<String>? onCardNumberCopied;
+
   /// Locks the card in a frozen security state with frosted ice crystals.
   final bool isFrozen;
 
@@ -96,6 +105,9 @@ class HorizontalCard extends StatefulWidget {
     this.isDynamicCvv = false,
     this.dynamicCvvConfig,
     this.dynamicCvvController,
+    this.enableCopy = false,
+    this.cleanCopiedNumber = true,
+    this.onCardNumberCopied,
     this.isFrozen = false,
     this.isExpired = false,
     this.bankLogo,
@@ -322,6 +334,10 @@ class _HorizontalCardState extends State<HorizontalCard>
                                     tiltY: activeTiltY,
                                     isMasked: widget.isMasked,
                                     bankLogo: widget.bankLogo,
+                                    enableCopy: widget.enableCopy,
+                                    cleanCopiedNumber: widget.cleanCopiedNumber,
+                                    onCardNumberCopied:
+                                        widget.onCardNumberCopied,
                                   ),
 
                             // Dynamic Specular Glare Layer

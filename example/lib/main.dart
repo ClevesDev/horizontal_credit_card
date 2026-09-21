@@ -45,6 +45,19 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
   bool _isFrozen = false;
   bool _isFlipped = false;
   bool _isDynamicCvv = true;
+  bool _enableCopy = true;
+
+  void _showCopiedSnackbar(String number) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Card number copied to clipboard: $number'),
+        backgroundColor: const Color(0xFF1E293B),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(milliseconds: 1500),
+      ),
+    );
+  }
 
   void _selectPreset(HorizontalCardTheme theme,
       {CardBrand? brand, String? number, String? holder}) {
@@ -99,6 +112,8 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                   isMasked: _isMasked,
                   isFrozen: _isFrozen,
                   isDynamicCvv: _isDynamicCvv,
+                  enableCopy: _enableCopy,
+                  onCardNumberCopied: _showCopiedSnackbar,
                   onFlip: (flipped) => setState(() => _isFlipped = flipped),
                 ),
               ),
@@ -301,6 +316,22 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                     label: Text(_isMasked ? 'Reveal Numbers' : 'Mask Numbers'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF1E293B),
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () => setState(() => _enableCopy = !_enableCopy),
+                    icon: Icon(
+                      _enableCopy ? Icons.copy_rounded : Icons.content_copy,
+                      size: 16,
+                    ),
+                    label: Text(
+                      _enableCopy ? 'Copy Icon (Visible)' : 'Copy Icon (Hidden)',
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _enableCopy
+                          ? const Color(0xFF6366F1)
+                          : const Color(0xFF1E293B),
                       foregroundColor: Colors.white,
                     ),
                   ),
