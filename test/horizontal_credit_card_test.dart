@@ -28,6 +28,31 @@ void main() {
       expect(find.byType(HorizontalContactless), findsOneWidget);
     });
 
+    testWidgets('Renders US Green Card with 3D embossed finish and Amex format',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: HorizontalCard(
+              cardNumber: '3759 876543 21001',
+              cardHolder: 'C F FROST',
+              expiryDate: '09/28',
+              cvv: '1001',
+              brand: CardBrand.americanExpress,
+              cardTheme: HorizontalCardTheme.greenCard,
+              textFinish: CardTextFinish.embossed,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('C F FROST'), findsOneWidget);
+      expect(find.text('09/28'), findsOneWidget);
+      expect(find.text('3759  876543  21001'), findsOneWidget);
+      expect(find.text('AMERICAN EXPRESS'), findsOneWidget);
+      expect(find.text('AMEX'), findsOneWidget);
+    });
+
     testWidgets('Masks card number when isMasked is true',
         (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -118,6 +143,15 @@ void main() {
       expect(HorizontalCardTheme.black.textColor, isNotNull);
       expect(HorizontalCardTheme.electricPurple.backgroundGradient, isNotNull);
       expect(HorizontalCardTheme.titanium.backgroundColor, isNotNull);
+      expect(HorizontalCardTheme.greenCard.backgroundPainter, isNotNull);
+      expect(HorizontalCardTheme.greenCard.textFinish, CardTextFinish.embossed);
+    });
+
+    test('CardTextFinish covers all finishes', () {
+      expect(CardTextFinish.values, contains(CardTextFinish.flat));
+      expect(CardTextFinish.values, contains(CardTextFinish.embossed));
+      expect(CardTextFinish.values, contains(CardTextFinish.goldFoil));
+      expect(CardTextFinish.values, contains(CardTextFinish.silverFoil));
     });
   });
 }

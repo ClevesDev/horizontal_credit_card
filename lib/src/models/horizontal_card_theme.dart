@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../painters/horizontal_guilloche_painter.dart';
+import 'card_text_finish.dart';
 
 /// Defines visual and stylistic attributes for a horizontal credit card.
 class HorizontalCardTheme {
@@ -13,6 +15,12 @@ class HorizontalCardTheme {
 
   /// Secondary text color for labels (e.g., 'CARDHOLDER', 'EXPIRES').
   final Color labelColor;
+
+  /// Tactile physical typography finish (flat, embossed, goldFoil, silverFoil).
+  final CardTextFinish textFinish;
+
+  /// Optional background painter for custom security watermarks or guilloche patterns.
+  final CustomPainter? backgroundPainter;
 
   /// The card corner border radius.
   final BorderRadius borderRadius;
@@ -32,6 +40,8 @@ class HorizontalCardTheme {
     this.backgroundColor = const Color(0xFF1E293B),
     this.textColor = Colors.white,
     this.labelColor = const Color(0x99FFFFFF),
+    this.textFinish = CardTextFinish.flat,
+    this.backgroundPainter,
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.border,
     this.shadows,
@@ -98,6 +108,36 @@ class HorizontalCardTheme {
         color: Color(0x40000000),
         blurRadius: 20,
         offset: Offset(0, 10),
+      ),
+    ],
+  );
+
+  /// Heritage American Express Green Card theme with authentic banknote guilloche,
+  /// geometric security border, centurion medallion, and physical 3D embossed letterpress.
+  static const HorizontalCardTheme greenCard = HorizontalCardTheme(
+    backgroundGradient: LinearGradient(
+      colors: [
+        Color(0xFF285A3C),
+        Color(0xFF1E452E),
+        Color(0xFF143321),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    backgroundColor: Color(0xFF1E452E),
+    textColor: Color(0xFFF1F5F9),
+    labelColor: Color(0xCCA7C4B0),
+    textFinish: CardTextFinish.embossed,
+    backgroundPainter: HorizontalGuillochePainter(),
+    border: Border.fromBorderSide(
+      BorderSide(color: Color(0x4486EFAC), width: 1),
+    ),
+    glareColor: Color(0x2E86EFAC),
+    shadows: [
+      BoxShadow(
+        color: Color(0x66000000),
+        blurRadius: 24,
+        offset: Offset(0, 12),
       ),
     ],
   );

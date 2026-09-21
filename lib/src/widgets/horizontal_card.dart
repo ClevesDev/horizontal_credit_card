@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../models/card_brand.dart';
+import '../models/card_text_finish.dart';
 import '../models/horizontal_card_theme.dart';
 import '../painters/horizontal_specular_glare_painter.dart';
 import 'horizontal_card_back.dart';
@@ -27,6 +28,9 @@ class HorizontalCard extends StatefulWidget {
 
   /// The visual theme styling the card surface.
   final HorizontalCardTheme cardTheme;
+
+  /// Tactile physical typography finish override (defaults to theme finish).
+  final CardTextFinish? textFinish;
 
   /// Overall width of the card. Default is 320.0.
   final double width;
@@ -68,6 +72,7 @@ class HorizontalCard extends StatefulWidget {
     required this.cvv,
     this.brand = CardBrand.visa,
     this.cardTheme = HorizontalCardTheme.black,
+    this.textFinish,
     this.width = 320.0,
     this.height,
     this.isFlipped = false,
@@ -268,6 +273,10 @@ class _HorizontalCardState extends State<HorizontalCard>
                                 expiryDate: widget.expiryDate,
                                 brand: widget.brand,
                                 cardTheme: widget.cardTheme,
+                                textFinish: widget.textFinish ??
+                                    widget.cardTheme.textFinish,
+                                tiltX: activeTiltX,
+                                tiltY: activeTiltY,
                                 isMasked: widget.isMasked,
                                 bankLogo: widget.bankLogo,
                               ),

@@ -92,6 +92,16 @@ The package includes pre-calibrated luxury themes:
 * `HorizontalCardTheme.black`: Obsidian carbon dark finish with silver borders.
 * `HorizontalCardTheme.electricPurple`: Modern neobank purple gradient (Zinli / Nubank style).
 * `HorizontalCardTheme.titanium`: Minimalist brushed platinum titanium (Apple Card style).
+* `HorizontalCardTheme.greenCard`: Heritage American Express Green Card style with authentic banknote guilloche, security frame, Roman centurion medallion, and physical 3D embossed letterpress.
+
+---
+
+## Physical Typography Relief (`CardTextFinish`)
+
+* `CardTextFinish.embossed`: Stamped physical 3D letterpress with dynamic directional bevel highlights and deep cast shadows.
+* `CardTextFinish.silverFoil`: Liquid chrome silver platinum foil stamping.
+* `CardTextFinish.goldFoil`: Directional hot-stamped gold bullion foil with specular glint.
+* `CardTextFinish.flat`: Crisp anti-aliased digital ink printing.
 
 ---
 
@@ -99,12 +109,13 @@ The package includes pre-calibrated luxury themes:
 
 | Parameter | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `cardNumber` | `String` | **Required** | 16-digit card number |
+| `cardNumber` | `String` | **Required** | 16-digit (or 15-digit) card number |
 | `cardHolder` | `String` | **Required** | Cardholder full name |
 | `expiryDate` | `String` | **Required** | Expiration date (MM/YY) |
 | `cvv` | `String` | **Required** | 3 or 4 digit security code |
 | `brand` | `CardBrand` | `CardBrand.visa` | Payment network brand |
 | `cardTheme` | `HorizontalCardTheme` | `HorizontalCardTheme.black` | Theme configuration |
+| `textFinish` | `CardTextFinish?` | `null` | Typography finish override |
 | `width` | `double` | `320.0` | Outer card width |
 | `height` | `double?` | `width / 1.586` | Outer card height |
 | `isFlipped` | `bool` | `false` | Programmatic flip to back |
