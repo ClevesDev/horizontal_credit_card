@@ -3,8 +3,14 @@
 <div align="center">
 
 [![pub package](https://img.shields.io/pub/v/horizontal_credit_card.svg?color=blue)](https://pub.dev/packages/horizontal_credit_card)
+[![Flutter CI](https://github.com/ClevesDev/horizontal_credit_card/actions/workflows/ci.yml/badge.svg)](https://github.com/ClevesDev/horizontal_credit_card/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Web_Playground-00D4B2?style=flat&logo=googlechrome&logoColor=white)](https://clevesdev.github.io/horizontal_credit_card/)
+[![GitHub Stars](https://img.shields.io/github/stars/ClevesDev/horizontal_credit_card?style=flat&logo=github&color=FFD700)](https://github.com/ClevesDev/horizontal_credit_card/stargazers)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-F16061?style=flat&logo=ko-fi&logoColor=white)](https://ko-fi.com/clevesdev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Presets](https://img.shields.io/badge/Presets-Ready-FF007F?style=flat&logo=palette&logoColor=white)](#curated-presets-library-cardpresets)
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?logo=flutter&logoColor=white)](https://flutter.dev)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/ClevesDev/horizontal_credit_card/pulls)
 
 **A modern, customizable horizontal credit and debit card UI widget for Flutter fintech applications.**  
 Engineered with interactive 3D perspective physics, gyroscopic specular reflection, 180° flip animation, tap-to-reveal privacy masking, dynamic 60-second rolling CVV, one-tap clipboard copying, holographic security foil shimmers, physical 3D rim thickness, and **zero external dependencies**.
@@ -17,7 +23,11 @@ Engineered with interactive 3D perspective physics, gyroscopic specular reflecti
 
 ---
 
-## Showcase
+## Visual Showcase
+
+> [!TIP]
+> **Try the Interactive 3D Web Playground live in your browser without installing:**  
+> **[https://clevesdev.github.io/horizontal_credit_card/](https://clevesdev.github.io/horizontal_credit_card/)** &nbsp; [![Star on GitHub](https://img.shields.io/github/stars/ClevesDev/horizontal_credit_card?style=social)](https://github.com/ClevesDev/horizontal_credit_card/stargazers)
 
 | 3D Physical Rim & Embossed Typography | Dynamic Holographic Security Stripe |
 | :---: | :---: |
@@ -225,6 +235,24 @@ The package includes ready-to-use production card themes categorized into specia
 | `enableTilt` | `bool` | `true` | Interactive 3D tilt physics |
 | `onTap` | `VoidCallback?` | `null` | Tap callback |
 | `onFlip` | `ValueChanged<bool>?` | `null` | Flip state listener |
+
+---
+
+## Support
+
+If you find `horizontal_credit_card` useful and it saved you time in your project, consider supporting its development. Every coffee helps keep the project maintained, tested, and expanding with new 3D features:
+
+<div align="center">
+
+[![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/clevesdev)
+
+</div>
+
+---
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome. Feel free to check the [issues page](https://github.com/ClevesDev/horizontal_credit_card/issues) or submit a pull request.
 
 ---
 

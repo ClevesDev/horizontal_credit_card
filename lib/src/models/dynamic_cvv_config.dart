@@ -76,8 +76,7 @@ class DynamicCvvConfig {
       enabled: enabled ?? this.enabled,
       duration: duration ?? this.duration,
       showTimer: showTimer ?? this.showTimer,
-      showRemainingSeconds:
-          showRemainingSeconds ?? this.showRemainingSeconds,
+      showRemainingSeconds: showRemainingSeconds ?? this.showRemainingSeconds,
       tapToRefresh: tapToRefresh ?? this.tapToRefresh,
       digitsLength: digitsLength ?? this.digitsLength,
       ringColor: ringColor ?? this.ringColor,

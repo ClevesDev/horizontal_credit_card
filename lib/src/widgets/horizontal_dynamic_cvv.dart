@@ -106,8 +106,8 @@ class _HorizontalDynamicCvvState extends State<HorizontalDynamicCvv>
       builder: (context, _) {
         final remainingSeconds = _effectiveController.remainingSeconds;
         final progress = _effectiveController.progress;
-        final isWarning = remainingSeconds <=
-            widget.config.warningThreshold.inSeconds;
+        final isWarning =
+            remainingSeconds <= widget.config.warningThreshold.inSeconds;
 
         final activeRingColor = isWarning
             ? (widget.config.ringWarningColor ?? const Color(0xFFEF4444))

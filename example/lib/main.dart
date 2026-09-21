@@ -315,7 +315,9 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                       size: 16,
                     ),
                     label: Text(
-                      _isFlipped ? 'Show Front Face' : 'Flip to Back Face (CVV)',
+                      _isFlipped
+                          ? 'Show Front Face'
+                          : 'Flip to Back Face (CVV)',
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _isFlipped
@@ -362,7 +364,9 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                       size: 16,
                     ),
                     label: Text(
-                      _enableCopy ? 'Copy Icon (Visible)' : 'Copy Icon (Hidden)',
+                      _enableCopy
+                          ? 'Copy Icon (Visible)'
+                          : 'Copy Icon (Hidden)',
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _enableCopy
