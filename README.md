@@ -1,8 +1,19 @@
 # horizontal_credit_card
 
-A modern, customizable horizontal credit and debit card UI widget for Flutter fintech applications with interactive 3D perspective tilt, gyroscopic specular reflection, 180° flip animation, tap-to-reveal privacy masking, dynamic 60-second rolling CVV, one-tap clipboard copying, holographic security foil shimmers, physical 3D rim thickness, and frozen card states.
+<div align="center">
 
-Built with **zero external dependencies** on top of the native Flutter SDK.
+[![pub package](https://img.shields.io/pub/v/horizontal_credit_card.svg?color=blue)](https://pub.dev/packages/horizontal_credit_card)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?logo=flutter&logoColor=white)](https://flutter.dev)
+
+**A modern, customizable horizontal credit and debit card UI widget for Flutter fintech applications.**  
+Engineered with interactive 3D perspective physics, gyroscopic specular reflection, 180° flip animation, tap-to-reveal privacy masking, dynamic 60-second rolling CVV, one-tap clipboard copying, holographic security foil shimmers, physical 3D rim thickness, and **zero external dependencies**.
+
+<br />
+
+<img src="doc/screenshots/horizontal_credit_card_banner.jpg" width="100%" alt="horizontal_credit_card Flutter Package Banner" />
+
+</div>
 
 ---
 
@@ -137,6 +148,10 @@ HorizontalCard(
 ---
 
 ## Curated Presets Library (`CardPresets`)
+
+<div align="center">
+  <img src="doc/screenshots/horizontal_cards_lineup.jpg" width="100%" alt="Horizontal Credit Card Presets Lineup" />
+</div>
 
 The package includes ready-to-use production card themes categorized into specialized collections:
 
