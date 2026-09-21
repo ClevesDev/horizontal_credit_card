@@ -152,7 +152,8 @@ void main() {
       expect(find.text('739'), findsOneWidget);
     });
 
-    testWidgets('Card renders static CVV box when isDynamicCvv is false on back',
+    testWidgets(
+        'Card renders static CVV box when isDynamicCvv is false on back',
         (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(

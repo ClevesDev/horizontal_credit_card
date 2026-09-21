@@ -7,10 +7,10 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(const HorizontalCardDemoApp());
 
-    expect(find.text('Horizontal Card 3D'), findsOneWidget);
+    expect(find.text('Horizontal Card 3D Studio'), findsOneWidget);
     expect(find.byType(HorizontalCard), findsOneWidget);
-    expect(find.text('Obsidian Black'), findsOneWidget);
-    expect(find.text('Electric Purple'), findsOneWidget);
-    expect(find.text('Titanium'), findsOneWidget);
+    expect(find.text('Geometric Patterns'), findsOneWidget);
+    expect(find.text('Solid Colors'), findsOneWidget);
+    expect(find.text('Luxury Metals'), findsOneWidget);
   });
 }
