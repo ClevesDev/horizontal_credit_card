@@ -311,4 +311,42 @@ class CardPresets {
   /// Modern neobank electric purple theme (Zinli style).
   static HorizontalCardTheme get electricPurple =>
       HorizontalCardTheme.electricPurple;
+
+  /// Cyberpunk deep obsidian card tailored for holographic rainbow diffraction.
+  static HorizontalCardTheme get cyberpunkHolo => const HorizontalCardTheme(
+        backgroundColor: Color(0xFF0D0F18),
+        textColor: Color(0xFFF8FAFC),
+        labelColor: Color(0xFF94A3B8),
+        edgeColor: Color(0xFF1E293B),
+        textFinish: CardTextFinish.embossed,
+        border: Border.fromBorderSide(
+          BorderSide(color: Color(0x3338BDF8), width: 1.0),
+        ),
+        shadows: [
+          BoxShadow(
+            color: Color(0x4400E5FF),
+            blurRadius: 28,
+            offset: Offset(0, 12),
+          ),
+        ],
+      );
+
+  /// Polished silver platinum card tailored for security hologram badges.
+  static HorizontalCardTheme get platinumHologram => const HorizontalCardTheme(
+        backgroundColor: Color(0xFFE2E8F0),
+        textColor: Color(0xFF0F172A),
+        labelColor: Color(0xFF475569),
+        edgeColor: Color(0xFFCBD5E1),
+        textFinish: CardTextFinish.embossed,
+        border: Border.fromBorderSide(
+          BorderSide(color: Color(0xFF94A3B8), width: 1.0),
+        ),
+        shadows: [
+          BoxShadow(
+            color: Color(0x33000000),
+            blurRadius: 24,
+            offset: Offset(0, 12),
+          ),
+        ],
+      );
 }
