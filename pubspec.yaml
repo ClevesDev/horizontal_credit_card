@@ -1,0 +1,26 @@
+name: horizontal_credit_card
+description: A modern, customizable horizontal credit and debit card UI widget for Flutter with 3D flip, metallic, glassmorphic, and frozen card states.
+version: 0.0.1
+homepage: https://github.com/ClevesDev/horizontal_credit_card
+repository: https://github.com/ClevesDev/horizontal_credit_card
+issue_tracker: https://github.com/ClevesDev/horizontal_credit_card/issues
+
+topics:
+  - credit-card
+  - fintech
+  - horizontal-card
+  - card-wallet
+  - wallet
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.10.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
