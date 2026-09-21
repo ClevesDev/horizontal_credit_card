@@ -32,6 +32,10 @@ class HorizontalCard extends StatefulWidget {
   /// Tactile physical typography finish override (defaults to theme finish).
   final CardTextFinish? textFinish;
 
+  /// Physical 3D thickness of the card rim in logical pixels. Defaults to 3.5 (~1.0mm).
+  /// Set to 0.0 for a completely flat card.
+  final double thickness;
+
   /// Overall width of the card. Default is 320.0.
   final double width;
 
@@ -73,6 +77,7 @@ class HorizontalCard extends StatefulWidget {
     this.brand = CardBrand.visa,
     this.cardTheme = HorizontalCardTheme.black,
     this.textFinish,
+    this.thickness = 3.5,
     this.width = 320.0,
     this.height,
     this.isFlipped = false,
@@ -241,78 +246,100 @@ class _HorizontalCardState extends State<HorizontalCard>
               child: Transform(
                 transform: transform,
                 alignment: Alignment.center,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: widget.cardTheme.borderRadius,
-                    gradient: widget.cardTheme.backgroundGradient,
-                    color: widget.cardTheme.backgroundGradient == null
-                        ? widget.cardTheme.backgroundColor
-                        : null,
-                    border: widget.cardTheme.border,
-                    boxShadow: widget.cardTheme.shadows,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: widget.cardTheme.borderRadius,
-                    child: Stack(
-                      children: [
-                        // Card Face Content (Front or Back)
-                        _isBackVisible
-                            ? Transform(
-                                transform: Matrix4.identity()..rotateY(math.pi),
-                                alignment: Alignment.center,
-                                child: HorizontalCardBack(
-                                  cvv: widget.cvv,
-                                  brand: widget.brand,
-                                  cardTheme: widget.cardTheme,
-                                  isMasked: widget.isMasked,
-                                ),
-                              )
-                            : HorizontalCardFront(
-                                cardNumber: widget.cardNumber,
-                                cardHolder: widget.cardHolder,
-                                expiryDate: widget.expiryDate,
-                                brand: widget.brand,
-                                cardTheme: widget.cardTheme,
-                                textFinish: widget.textFinish ??
-                                    widget.cardTheme.textFinish,
-                                tiltX: activeTiltX,
-                                tiltY: activeTiltY,
-                                isMasked: widget.isMasked,
-                                bankLogo: widget.bankLogo,
-                              ),
-
-                        // Dynamic Specular Glare Layer
-                        Positioned.fill(
-                          child: IgnorePointer(
-                            child: CustomPaint(
-                              painter: HorizontalSpecularGlarePainter(
-                                tiltX: activeTiltX,
-                                tiltY: activeTiltY,
-                                glareColor: widget.cardTheme.glareColor,
-                                borderRadius: widget.cardTheme.borderRadius,
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        // Frozen Card Overlay
-                        if (widget.isFrozen)
-                          Positioned.fill(
-                            child: _FrozenCardOverlay(
-                              borderRadius: widget.cardTheme.borderRadius,
-                            ),
-                          ),
-
-                        // Expired Card Overlay
-                        if (widget.isExpired)
-                          Positioned.fill(
-                            child: _ExpiredCardOverlay(
-                              borderRadius: widget.cardTheme.borderRadius,
-                            ),
-                          ),
-                      ],
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    // Physical 3D Extruded Rim (simulating real card thickness in mm)
+                    ..._buildExtrudedRim(
+                      thickness: widget.thickness,
+                      edgeColor: widget.cardTheme.edgeColor ??
+                          widget.cardTheme.backgroundColor,
+                      borderRadius: widget.cardTheme.borderRadius,
+                      width: widget.width,
+                      height: cardHeight,
+                      angle: angle,
                     ),
-                  ),
+
+                    // Main Card Body Container
+                    Container(
+                      width: widget.width,
+                      height: cardHeight,
+                      decoration: BoxDecoration(
+                        borderRadius: widget.cardTheme.borderRadius,
+                        gradient: widget.cardTheme.backgroundGradient,
+                        color: widget.cardTheme.backgroundGradient == null
+                            ? widget.cardTheme.backgroundColor
+                            : null,
+                        border: widget.cardTheme.border,
+                        boxShadow: widget.thickness > 0
+                            ? null
+                            : widget.cardTheme.shadows,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: widget.cardTheme.borderRadius,
+                        child: Stack(
+                          children: [
+                            // Card Face Content (Front or Back)
+                            _isBackVisible
+                                ? Transform(
+                                    transform: Matrix4.identity()
+                                      ..rotateY(math.pi),
+                                    alignment: Alignment.center,
+                                    child: HorizontalCardBack(
+                                      cvv: widget.cvv,
+                                      brand: widget.brand,
+                                      cardTheme: widget.cardTheme,
+                                      isMasked: widget.isMasked,
+                                    ),
+                                  )
+                                : HorizontalCardFront(
+                                    cardNumber: widget.cardNumber,
+                                    cardHolder: widget.cardHolder,
+                                    expiryDate: widget.expiryDate,
+                                    brand: widget.brand,
+                                    cardTheme: widget.cardTheme,
+                                    textFinish: widget.textFinish ??
+                                        widget.cardTheme.textFinish,
+                                    tiltX: activeTiltX,
+                                    tiltY: activeTiltY,
+                                    isMasked: widget.isMasked,
+                                    bankLogo: widget.bankLogo,
+                                  ),
+
+                            // Dynamic Specular Glare Layer
+                            Positioned.fill(
+                              child: IgnorePointer(
+                                child: CustomPaint(
+                                  painter: HorizontalSpecularGlarePainter(
+                                    tiltX: activeTiltX,
+                                    tiltY: activeTiltY,
+                                    glareColor: widget.cardTheme.glareColor,
+                                    borderRadius: widget.cardTheme.borderRadius,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // Frozen Card Overlay
+                            if (widget.isFrozen)
+                              Positioned.fill(
+                                child: _FrozenCardOverlay(
+                                  borderRadius: widget.cardTheme.borderRadius,
+                                ),
+                              ),
+
+                            // Expired Card Overlay
+                            if (widget.isExpired)
+                              Positioned.fill(
+                                child: _ExpiredCardOverlay(
+                                  borderRadius: widget.cardTheme.borderRadius,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -320,6 +347,54 @@ class _HorizontalCardState extends State<HorizontalCard>
         );
       },
     );
+  }
+
+  List<Widget> _buildExtrudedRim({
+    required double thickness,
+    required Color edgeColor,
+    required BorderRadius borderRadius,
+    required double width,
+    required double height,
+    required double angle,
+  }) {
+    if (thickness <= 0.0) return const [];
+
+    const sliceCount = 6;
+    final flipDirection = math.cos(angle) >= 0 ? 1.0 : -1.0;
+    final layers = <Widget>[];
+
+    for (int i = sliceCount; i >= 1; i--) {
+      final progress = i / sliceCount;
+      final z = -thickness * progress * flipDirection;
+
+      final shadedColor = Color.lerp(
+        edgeColor,
+        Colors.black,
+        progress * 0.35,
+      )!;
+
+      layers.add(
+        Transform(
+          transform: Matrix4.translationValues(0.0, 0.0, z),
+          alignment: Alignment.center,
+          child: Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              borderRadius: borderRadius,
+              color: shadedColor,
+              border: Border.all(
+                color: shadedColor.withValues(alpha: 0.9),
+                width: 0.5,
+              ),
+              boxShadow: i == sliceCount ? widget.cardTheme.shadows : null,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return layers;
   }
 }
 

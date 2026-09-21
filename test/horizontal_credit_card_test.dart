@@ -118,6 +118,25 @@ void main() {
       expect(find.text('999'), findsOneWidget);
     });
 
+    testWidgets('Renders card with 3D physical thickness',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: HorizontalCard(
+              cardNumber: '4532 8812 9043 7721',
+              cardHolder: 'Alexander Wright',
+              expiryDate: '09/29',
+              cvv: '842',
+              thickness: 5.0,
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(HorizontalCard), findsOneWidget);
+    });
+
     testWidgets('Renders custom bankLogo when provided',
         (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -141,9 +160,13 @@ void main() {
   group('HorizontalCardTheme Tests', () {
     test('Pre-built themes have non-null attributes', () {
       expect(HorizontalCardTheme.black.textColor, isNotNull);
+      expect(HorizontalCardTheme.black.edgeColor, isNotNull);
       expect(HorizontalCardTheme.electricPurple.backgroundGradient, isNotNull);
+      expect(HorizontalCardTheme.electricPurple.edgeColor, isNotNull);
       expect(HorizontalCardTheme.titanium.backgroundColor, isNotNull);
+      expect(HorizontalCardTheme.titanium.edgeColor, isNotNull);
       expect(HorizontalCardTheme.greenCard.backgroundPainter, isNotNull);
+      expect(HorizontalCardTheme.greenCard.edgeColor, isNotNull);
       expect(HorizontalCardTheme.greenCard.textFinish, CardTextFinish.embossed);
     });
 

@@ -34,6 +34,9 @@ class HorizontalCardTheme {
   /// Specular glare color reflecting light off the card surface.
   final Color glareColor;
 
+  /// The physical 3D core edge rim color visible when the card tilts.
+  final Color? edgeColor;
+
   /// Creates a [HorizontalCardTheme] configuration.
   const HorizontalCardTheme({
     this.backgroundGradient,
@@ -46,6 +49,7 @@ class HorizontalCardTheme {
     this.border,
     this.shadows,
     this.glareColor = const Color(0x33FFFFFF),
+    this.edgeColor,
   });
 
   /// Deep obsidian luxury theme (Amex Centurion / Black Card style).
@@ -57,6 +61,7 @@ class HorizontalCardTheme {
     ),
     textColor: Color(0xFFE2E8F0),
     labelColor: Color(0x8094A3B8),
+    edgeColor: Color(0xFF1E293B),
     border: Border.fromBorderSide(
       BorderSide(color: Color(0x33FFFFFF), width: 1),
     ),
@@ -78,6 +83,7 @@ class HorizontalCardTheme {
     ),
     textColor: Colors.white,
     labelColor: Color(0xAAFFFFFF),
+    edgeColor: Color(0xFF581C87),
     border: Border.fromBorderSide(
       BorderSide(color: Color(0x33C084FC), width: 1),
     ),
@@ -100,6 +106,7 @@ class HorizontalCardTheme {
     backgroundColor: Color(0xFFCBD5E1),
     textColor: Color(0xFF0F172A),
     labelColor: Color(0xFF475569),
+    edgeColor: Color(0xFF94A3B8),
     border: Border.fromBorderSide(
       BorderSide(color: Color(0x66FFFFFF), width: 1),
     ),
@@ -127,6 +134,7 @@ class HorizontalCardTheme {
     backgroundColor: Color(0xFF1E452E),
     textColor: Color(0xFFF1F5F9),
     labelColor: Color(0xCCA7C4B0),
+    edgeColor: Color(0xFF163D26),
     textFinish: CardTextFinish.embossed,
     backgroundPainter: HorizontalGuillochePainter(),
     border: Border.fromBorderSide(

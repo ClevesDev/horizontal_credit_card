@@ -116,6 +116,7 @@ The package includes pre-calibrated luxury themes:
 | `brand` | `CardBrand` | `CardBrand.visa` | Payment network brand |
 | `cardTheme` | `HorizontalCardTheme` | `HorizontalCardTheme.black` | Theme configuration |
 | `textFinish` | `CardTextFinish?` | `null` | Typography finish override |
+| `thickness` | `double` | `3.5` | Physical 3D thickness (rim edge) in dp |
 | `width` | `double` | `320.0` | Outer card width |
 | `height` | `double?` | `width / 1.586` | Outer card height |
 | `isFlipped` | `bool` | `false` | Programmatic flip to back |

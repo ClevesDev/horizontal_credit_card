@@ -37,6 +37,7 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
   String _cardHolder = 'C F FROST';
   String _expiryDate = '09/28';
   String _cvv = '1001';
+  double _thickness = 4.0;
   bool _isMasked = false;
   bool _isFrozen = false;
 
@@ -81,7 +82,7 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
             children: [
               const SizedBox(height: 8),
 
-              // The 3D Horizontal Card with Physical Embossed Letterpress
+              // The 3D Horizontal Card with Physical Thickness and Embossed Letterpress
               Center(
                 child: HorizontalCard(
                   cardNumber: _cardNumber,
@@ -91,6 +92,7 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                   brand: _currentBrand,
                   cardTheme: _currentTheme,
                   textFinish: _currentFinish,
+                  thickness: _thickness,
                   isMasked: _isMasked,
                   isFrozen: _isFrozen,
                 ),
@@ -219,6 +221,33 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
 
               const SizedBox(height: 24),
 
+              // Physical 3D Edge Thickness Selector
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'PHYSICAL CARD THICKNESS (ESPESOR 3D)',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _buildThicknessChip(5.0, 'Heavy Metal (5.0 mm)'),
+                  _buildThicknessChip(3.5, 'Premium (3.5 mm)'),
+                  _buildThicknessChip(2.0, 'Standard (2.0 mm)'),
+                  _buildThicknessChip(0.0, 'Flat (0.0 mm)'),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
               // Security Toggles
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -335,6 +364,26 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
               _cvv = '842';
             }
           });
+        }
+      },
+      selectedColor: const Color(0xFF16A34A),
+      backgroundColor: const Color(0xFF1E293B),
+      labelStyle: TextStyle(
+        color: isSelected ? Colors.white : Colors.white70,
+        fontWeight: isSelected ? FontWeight.w700 : FontWeight.normal,
+        fontSize: 12,
+      ),
+    );
+  }
+
+  Widget _buildThicknessChip(double value, String label) {
+    final isSelected = _thickness == value;
+    return ChoiceChip(
+      label: Text(label),
+      selected: isSelected,
+      onSelected: (selected) {
+        if (selected) {
+          setState(() => _thickness = value);
         }
       },
       selectedColor: const Color(0xFF16A34A),
