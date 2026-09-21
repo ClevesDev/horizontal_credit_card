@@ -1,6 +1,6 @@
 name: horizontal_credit_card
 description: A modern, customizable horizontal credit and debit card UI widget for Flutter with 3D flip, metallic, glassmorphic, and frozen card states.
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/ClevesDev/horizontal_credit_card
 repository: https://github.com/ClevesDev/horizontal_credit_card
 issue_tracker: https://github.com/ClevesDev/horizontal_credit_card/issues
@@ -17,14 +17,6 @@ screenshots:
     path: doc/screenshots/horizontal_credit_card_banner.jpg
   - description: 'Curated library of horizontal payment card presets and physical finishes.'
     path: doc/screenshots/horizontal_cards_lineup.jpg
-  - description: '3D physical thickness and letterpress embossed typography with specular glare reflection.'
-    path: doc/images/Animation1.gif
-  - description: 'Solid Cobalt Blue card with vertical holographic rainbow security stripe.'
-    path: doc/images/Animation2.gif
-  - description: 'Platinum Elite card with vertical security hologram ribbon.'
-    path: doc/images/Animation3.gif
-  - description: 'Security hologram badge, masked digits, and instant copy-to-clipboard button.'
-    path: doc/images/Animation4.gif
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

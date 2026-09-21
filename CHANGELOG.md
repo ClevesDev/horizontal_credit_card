@@ -1,3 +1,10 @@
+## 0.0.2
+
+* **Documentation & Asset Optimization:**
+  * Added comprehensive library-level dartdoc documentation to `horizontal_credit_card.dart`.
+  * Optimized `screenshots` configuration in `pubspec.yaml` to strictly reference static high-resolution images below 4 MB per pub.dev policy.
+  * Verified 100.0% dartdoc documentation coverage and full pub.dev score compliance.
+
 ## 0.0.1
 
 * **Initial Release:** Official production release of `horizontal_credit_card`.

@@ -1,3 +1,10 @@
+/// A modern, customizable horizontal credit and debit card UI widget for
+/// Flutter fintech applications.
+///
+/// Features interactive 3D perspective physics, gyroscopic specular reflection,
+/// 180-degree flip animations, dynamic rolling CVV, one-tap clipboard copy,
+/// holographic security foils, and physical 3D rim thickness with zero external
+/// runtime dependencies.
 library horizontal_credit_card;
 
 export 'src/models/card_brand.dart';
