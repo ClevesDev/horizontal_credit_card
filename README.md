@@ -85,14 +85,30 @@ class _CreditCardDemoState extends State<CreditCardDemo> {
 
 ---
 
-## Pre-Built Themes
+## Curated Presets Library (`CardPresets`)
 
-The package includes pre-calibrated luxury themes:
+The package includes ready-to-use production card themes categorized into specialized collections:
 
-* `HorizontalCardTheme.black`: Obsidian carbon dark finish with silver borders.
-* `HorizontalCardTheme.electricPurple`: Modern neobank purple gradient (Zinli / Nubank style).
-* `HorizontalCardTheme.titanium`: Minimalist brushed platinum titanium (Apple Card style).
-* `HorizontalCardTheme.greenCard`: Heritage American Express Green Card style with authentic banknote guilloche, security frame, Roman centurion medallion, and physical 3D embossed letterpress.
+### 1. Geometric Patterns Collection
+* `CardPresets.crimsonOrbit`: Vibrant rose crimson and ruby gradient with intersecting geometric orbital rings.
+* `CardPresets.royalAmethyst`: Royal amethyst purple gradient with intersecting geometric orbital rings.
+* `CardPresets.oceanAzure`: Ocean cyan and azure gradient with intersecting geometric orbital rings.
+* `CardPresets.midnightSapphire`: Deep midnight sapphire navy with luminous geometric orbital rings.
+* `CardPresets.amexGreen`: Heritage American Express Green Card with banknote guilloche and centurion watermark.
+* `CardPresets.cyberMesh`: High-tech cybersecurity card with isometric grid and cyan glow.
+
+### 2. Minimalist Solid Colors Collection
+* `CardPresets.solidMatteBlack`: Stealth matte black finish with silver typography.
+* `CardPresets.solidCeramicWhite`: Pure ceramic white card with obsidian typography (Apple Card style).
+* `CardPresets.solidCobaltBlue`: International debit cobalt blue with 3D embossed relief.
+* `CardPresets.solidHotCoral`: Modern neobank hot coral finish (Monzo style).
+* `CardPresets.solidNubankPurple`: Iconic solid electric purple (Nubank style).
+* `CardPresets.solidEmerald`: Deep Swiss private banking solid emerald green.
+
+### 3. Luxury Metals Collection
+* `CardPresets.obsidianBlack`: Deep obsidian carbon finish with silver borders.
+* `CardPresets.appleTitanium`: Minimalist brushed platinum titanium finish.
+* `CardPresets.electricPurple`: Vibrant neobank purple gradient.
 
 ---
 

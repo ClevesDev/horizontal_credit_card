@@ -177,4 +177,24 @@ void main() {
       expect(CardTextFinish.values, contains(CardTextFinish.silverFoil));
     });
   });
+
+  group('CardPresets Tests', () {
+    test('Geometric collection presets are valid and have painters', () {
+      expect(CardPresets.crimsonOrbit.backgroundPainter, isNotNull);
+      expect(CardPresets.royalAmethyst.backgroundPainter, isNotNull);
+      expect(CardPresets.oceanAzure.backgroundPainter, isNotNull);
+      expect(CardPresets.midnightSapphire.backgroundPainter, isNotNull);
+      expect(CardPresets.cyberMesh.backgroundPainter, isNotNull);
+      expect(CardPresets.amexGreen.backgroundPainter, isNotNull);
+    });
+
+    test('Solid collection presets are valid and have solid colors', () {
+      expect(CardPresets.solidMatteBlack.backgroundColor, isNotNull);
+      expect(CardPresets.solidCeramicWhite.backgroundColor, isNotNull);
+      expect(CardPresets.solidCobaltBlue.backgroundColor, isNotNull);
+      expect(CardPresets.solidHotCoral.backgroundColor, isNotNull);
+      expect(CardPresets.solidNubankPurple.backgroundColor, isNotNull);
+      expect(CardPresets.solidEmerald.backgroundColor, isNotNull);
+    });
+  });
 }
