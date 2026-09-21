@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/card_brand.dart';
 import '../models/card_text_finish.dart';
 import '../models/horizontal_card_theme.dart';
@@ -38,6 +40,15 @@ class HorizontalCardFront extends StatelessWidget {
   /// Optional bank branding logo widget injected at the top-right.
   final Widget? bankLogo;
 
+  /// Whether to display a subtle copy-to-clipboard button next to the card number.
+  final bool enableCopy;
+
+  /// When copying, whether to remove spaces (true) or retain formatted spacing (false).
+  final bool cleanCopiedNumber;
+
+  /// Callback triggered when the card number is copied to clipboard.
+  final ValueChanged<String>? onCardNumberCopied;
+
   /// Creates a [HorizontalCardFront] instance.
   const HorizontalCardFront({
     super.key,
@@ -51,6 +62,9 @@ class HorizontalCardFront extends StatelessWidget {
     this.tiltY = 0.0,
     this.isMasked = false,
     this.bankLogo,
+    this.enableCopy = false,
+    this.cleanCopiedNumber = true,
+    this.onCardNumberCopied,
   });
 
   @override
@@ -140,15 +154,34 @@ class HorizontalCardFront extends StatelessWidget {
               // Middle: 16/15-Digit Card Number with Physical 3D Embossed Relief
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Text(
-                  formattedNumber,
-                  style: TextStyle(
-                    fontFamily: 'monospace',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 2.4,
-                    color: cardTheme.textColor,
-                    shadows: textShadows,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        formattedNumber,
+                        style: TextStyle(
+                          fontFamily: 'monospace',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 2.4,
+                          color: cardTheme.textColor,
+                          shadows: textShadows,
+                        ),
+                      ),
+                      if (enableCopy) ...[
+                        const SizedBox(width: 8),
+                        _CopyCardNumberButton(
+                          cardNumber: cardNumber,
+                          cleanCopiedNumber: cleanCopiedNumber,
+                          color: cardTheme.labelColor,
+                          onCopied: onCardNumberCopied,
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ),
@@ -342,5 +375,103 @@ class HorizontalCardFront extends StatelessWidget {
       return '••••  ••••••  •$lastFour';
     }
     return '••••  ••••  ••••  $lastFour';
+  }
+}
+
+class _CopyCardNumberButton extends StatefulWidget {
+  final String cardNumber;
+  final bool cleanCopiedNumber;
+  final Color color;
+  final ValueChanged<String>? onCopied;
+
+  const _CopyCardNumberButton({
+    required this.cardNumber,
+    required this.cleanCopiedNumber,
+    required this.color,
+    this.onCopied,
+  });
+
+  @override
+  State<_CopyCardNumberButton> createState() => _CopyCardNumberButtonState();
+}
+
+class _CopyCardNumberButtonState extends State<_CopyCardNumberButton> {
+  bool _copied = false;
+  Timer? _resetTimer;
+
+  @override
+  void dispose() {
+    _resetTimer?.cancel();
+    super.dispose();
+  }
+
+  void _handleCopy() {
+    final text = widget.cleanCopiedNumber
+        ? widget.cardNumber.replaceAll(' ', '')
+        : widget.cardNumber;
+
+    widget.onCopied?.call(text);
+
+    _resetTimer?.cancel();
+    if (mounted) {
+      setState(() => _copied = true);
+    }
+
+    _resetTimer = Timer(const Duration(milliseconds: 1800), () {
+      if (mounted) {
+        setState(() => _copied = false);
+      }
+    });
+
+    Clipboard.setData(ClipboardData(text: text));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: _handleCopy,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: _copied
+              ? const Color(0xFF10B981).withValues(alpha: 0.25)
+              : widget.color.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(
+            color: _copied
+                ? const Color(0xFF10B981).withValues(alpha: 0.6)
+                : widget.color.withValues(alpha: 0.25),
+            width: 0.8,
+          ),
+        ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 220),
+          transitionBuilder: (child, animation) {
+            return ScaleTransition(
+              scale: animation,
+              child: FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+            );
+          },
+          child: _copied
+              ? const Icon(
+                  Icons.check_rounded,
+                  key: ValueKey('copied'),
+                  size: 13,
+                  color: Color(0xFF10B981),
+                )
+              : Icon(
+                  Icons.copy_rounded,
+                  key: const ValueKey('copy'),
+                  size: 13,
+                  color: widget.color.withValues(alpha: 0.85),
+                ),
+        ),
+      ),
+    );
   }
 }
