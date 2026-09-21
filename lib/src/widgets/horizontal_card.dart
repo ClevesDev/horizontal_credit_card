@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../models/card_brand.dart';
 import '../models/card_text_finish.dart';
+import '../models/dynamic_cvv_config.dart';
+import '../models/dynamic_cvv_controller.dart';
 import '../models/horizontal_card_theme.dart';
 import '../painters/horizontal_specular_glare_painter.dart';
 import 'horizontal_card_back.dart';
@@ -49,6 +51,15 @@ class HorizontalCard extends StatefulWidget {
   /// Mask sensitive numbers and CVV with bullet dots.
   final bool isMasked;
 
+  /// Enables dynamic rolling CVV with 60-second countdown timer.
+  final bool isDynamicCvv;
+
+  /// Configuration options for dynamic rolling CVV.
+  final DynamicCvvConfig? dynamicCvvConfig;
+
+  /// Optional external controller for dynamic rolling CVV.
+  final DynamicCvvController? dynamicCvvController;
+
   /// Locks the card in a frozen security state with frosted ice crystals.
   final bool isFrozen;
 
@@ -82,6 +93,9 @@ class HorizontalCard extends StatefulWidget {
     this.height,
     this.isFlipped = false,
     this.isMasked = false,
+    this.isDynamicCvv = false,
+    this.dynamicCvvConfig,
+    this.dynamicCvvController,
     this.isFrozen = false,
     this.isExpired = false,
     this.bankLogo,
@@ -290,6 +304,10 @@ class _HorizontalCardState extends State<HorizontalCard>
                                       brand: widget.brand,
                                       cardTheme: widget.cardTheme,
                                       isMasked: widget.isMasked,
+                                      isDynamicCvv: widget.isDynamicCvv,
+                                      dynamicCvvConfig: widget.dynamicCvvConfig,
+                                      dynamicCvvController:
+                                          widget.dynamicCvvController,
                                     ),
                                   )
                                 : HorizontalCardFront(

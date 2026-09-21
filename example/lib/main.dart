@@ -38,11 +38,13 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
   CardTextFinish _currentFinish = CardTextFinish.embossed;
   String _cardNumber = '5412 7523 9812 4568';
   String _cardHolder = 'ALEXANDER WRIGHT';
-  String _expiryDate = '08/29';
-  String _cvv = '456';
+  final String _expiryDate = '08/29';
+  final String _cvv = '456';
   double _thickness = 3.5;
   bool _isMasked = false;
   bool _isFrozen = false;
+  bool _isFlipped = false;
+  bool _isDynamicCvv = true;
 
   void _selectPreset(HorizontalCardTheme theme,
       {CardBrand? brand, String? number, String? holder}) {
@@ -93,8 +95,11 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                   cardTheme: _currentTheme,
                   textFinish: _currentFinish,
                   thickness: _thickness,
+                  isFlipped: _isFlipped,
                   isMasked: _isMasked,
                   isFrozen: _isFrozen,
+                  isDynamicCvv: _isDynamicCvv,
+                  onFlip: (flipped) => setState(() => _isFlipped = flipped),
                 ),
               ),
 
@@ -234,10 +239,59 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
 
               const SizedBox(height: 24),
 
-              // Security Toggles
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // Interactive Card Controls & Security Actions
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'INTERACTIVE ACTIONS & SECURITY',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
                 children: [
+                  ElevatedButton.icon(
+                    onPressed: () => setState(() => _isFlipped = !_isFlipped),
+                    icon: Icon(
+                      _isFlipped ? Icons.flip_to_front : Icons.flip_to_back,
+                      size: 16,
+                    ),
+                    label: Text(
+                      _isFlipped ? 'Show Front Face' : 'Flip to Back Face (CVV)',
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _isFlipped
+                          ? const Color(0xFF2563EB)
+                          : const Color(0xFF1E293B),
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () =>
+                        setState(() => _isDynamicCvv = !_isDynamicCvv),
+                    icon: Icon(
+                      _isDynamicCvv ? Icons.timer : Icons.timer_off_outlined,
+                      size: 16,
+                    ),
+                    label: Text(
+                      _isDynamicCvv
+                          ? 'Dynamic Rolling CVV (60s Active)'
+                          : 'Static Printed CVV',
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _isDynamicCvv
+                          ? const Color(0xFF10B981)
+                          : const Color(0xFF1E293B),
+                      foregroundColor: Colors.white,
+                    ),
+                  ),
                   ElevatedButton.icon(
                     onPressed: () => setState(() => _isMasked = !_isMasked),
                     icon: Icon(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../models/card_brand.dart';
+import '../models/dynamic_cvv_config.dart';
+import '../models/dynamic_cvv_controller.dart';
 import '../models/horizontal_card_theme.dart';
 import 'horizontal_brand_logo.dart';
+import 'horizontal_dynamic_cvv.dart';
 
 /// The landscape back face of the horizontal credit card.
 class HorizontalCardBack extends StatelessWidget {
@@ -17,6 +20,15 @@ class HorizontalCardBack extends StatelessWidget {
   /// Mask the CVV code with asterisks.
   final bool isMasked;
 
+  /// Whether to use dynamic rolling CVV.
+  final bool isDynamicCvv;
+
+  /// Configuration options for dynamic rolling CVV.
+  final DynamicCvvConfig? dynamicCvvConfig;
+
+  /// Optional external controller for dynamic rolling CVV.
+  final DynamicCvvController? dynamicCvvController;
+
   /// Creates a [HorizontalCardBack] instance.
   const HorizontalCardBack({
     super.key,
@@ -24,6 +36,9 @@ class HorizontalCardBack extends StatelessWidget {
     required this.brand,
     required this.cardTheme,
     this.isMasked = false,
+    this.isDynamicCvv = false,
+    this.dynamicCvvConfig,
+    this.dynamicCvvController,
   });
 
   @override
@@ -90,31 +105,40 @@ class HorizontalCardBack extends StatelessWidget {
 
                   const SizedBox(width: 8),
 
-                  // CVV security code box
-                  Container(
-                    height: 30,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: const Color(0xFFCBD5E1),
-                        width: 1,
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      isMasked ? '•••' : cvv,
-                      style: const TextStyle(
-                        fontFamily: 'monospace',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w800,
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: 1.5,
-                        color: Color(0xFF0F172A),
-                      ),
-                    ),
-                  ),
+                  // CVV security code box (static or dynamic 60s rolling)
+                  (isDynamicCvv ||
+                          dynamicCvvConfig != null ||
+                          dynamicCvvController != null)
+                      ? HorizontalDynamicCvv(
+                          config: dynamicCvvConfig ?? const DynamicCvvConfig(),
+                          controller: dynamicCvvController,
+                          initialCvv: cvv,
+                          isMasked: isMasked,
+                        )
+                      : Container(
+                          height: 30,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                              color: const Color(0xFFCBD5E1),
+                              width: 1,
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            isMasked ? '•••' : cvv,
+                            style: const TextStyle(
+                              fontFamily: 'monospace',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                              fontStyle: FontStyle.italic,
+                              letterSpacing: 1.5,
+                              color: Color(0xFF0F172A),
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
