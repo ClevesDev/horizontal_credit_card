@@ -46,6 +46,8 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
   bool _isFlipped = false;
   bool _isDynamicCvv = true;
   bool _enableCopy = true;
+  bool _isHolographic = true;
+  HoloStyle _holoStyle = HoloStyle.full;
 
   void _showCopiedSnackbar(String number) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -114,6 +116,11 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                   isDynamicCvv: _isDynamicCvv,
                   enableCopy: _enableCopy,
                   onCardNumberCopied: _showCopiedSnackbar,
+                  isHolographic: _isHolographic,
+                  holoConfig: HoloFoilConfig(
+                    style: _holoStyle,
+                    intensity: 0.40,
+                  ),
                   onFlip: (flipped) => setState(() => _isFlipped = flipped),
                 ),
               ),
@@ -249,6 +256,35 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                   _buildBrandChip(CardBrand.mastercard, 'Mastercard'),
                   _buildBrandChip(CardBrand.americanExpress, 'Amex'),
                   _buildBrandChip(CardBrand.discover, 'Discover'),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              // Holographic Security Foil (Holo Shimmer) Selector
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'HOLOGRAPHIC FOIL SHIMMER (HOLO DIFFRACTION)',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  _buildHoloChip(HoloStyle.full, 'Full Rainbow Sheen'),
+                  _buildHoloChip(
+                      HoloStyle.securityBadge, 'Security Hologram Badge'),
+                  _buildHoloChip(
+                      HoloStyle.securityStripe, 'Security Ribbon Stripe'),
+                  _buildHoloChip(null, 'Holo Disabled'),
                 ],
               ),
 
@@ -572,9 +608,72 @@ class _HorizontalCardDemoScreenState extends State<HorizontalCardDemoScreen> {
                 brand: CardBrand.visa,
               ),
             ),
+            _buildPresetChip(
+              label: 'Cyberpunk Holo',
+              color: const Color(0xFF0D0F18),
+              isSelected: _currentTheme == CardPresets.cyberpunkHolo,
+              onTap: () {
+                setState(() {
+                  _isHolographic = true;
+                  _holoStyle = HoloStyle.full;
+                });
+                _selectPreset(
+                  CardPresets.cyberpunkHolo,
+                  brand: CardBrand.visa,
+                  number: '4242 1337 9021 8844',
+                  holder: 'NEO TOKYO',
+                );
+              },
+            ),
+            _buildPresetChip(
+              label: 'Platinum Hologram',
+              color: const Color(0xFFE2E8F0),
+              textColor: const Color(0xFF0F172A),
+              isSelected: _currentTheme == CardPresets.platinumHologram,
+              onTap: () {
+                setState(() {
+                  _isHolographic = true;
+                  _holoStyle = HoloStyle.securityBadge;
+                });
+                _selectPreset(
+                  CardPresets.platinumHologram,
+                  brand: CardBrand.mastercard,
+                  number: '5100 8821 7734 0092',
+                  holder: 'PLATINUM ELITE',
+                );
+              },
+            ),
           ],
         );
     }
+  }
+
+  Widget _buildHoloChip(HoloStyle? style, String label) {
+    final isSelected = style == null
+        ? !_isHolographic
+        : (_isHolographic && _holoStyle == style);
+
+    return ChoiceChip(
+      label: Text(label),
+      selected: isSelected,
+      onSelected: (_) {
+        setState(() {
+          if (style == null) {
+            _isHolographic = false;
+          } else {
+            _isHolographic = true;
+            _holoStyle = style;
+          }
+        });
+      },
+      selectedColor: const Color(0xFF8B5CF6),
+      backgroundColor: const Color(0xFF1E293B),
+      labelStyle: TextStyle(
+        fontSize: 11.5,
+        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+        color: Colors.white,
+      ),
+    );
   }
 
   Widget _buildPresetChip({

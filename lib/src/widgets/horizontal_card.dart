@@ -4,7 +4,9 @@ import '../models/card_brand.dart';
 import '../models/card_text_finish.dart';
 import '../models/dynamic_cvv_config.dart';
 import '../models/dynamic_cvv_controller.dart';
+import '../models/holo_foil_config.dart';
 import '../models/horizontal_card_theme.dart';
+import '../painters/horizontal_holo_foil_painter.dart';
 import '../painters/horizontal_specular_glare_painter.dart';
 import 'horizontal_card_back.dart';
 import 'horizontal_card_front.dart';
@@ -75,6 +77,12 @@ class HorizontalCard extends StatefulWidget {
   /// Marks the card with an expired banner.
   final bool isExpired;
 
+  /// Whether to render the dynamic holographic rainbow diffraction foil.
+  final bool isHolographic;
+
+  /// Configuration options governing the holographic foil style, intensity, and layout.
+  final HoloFoilConfig? holoConfig;
+
   /// Optional bank logo injected at the top-right of the front face.
   final Widget? bankLogo;
 
@@ -110,6 +118,8 @@ class HorizontalCard extends StatefulWidget {
     this.onCardNumberCopied,
     this.isFrozen = false,
     this.isExpired = false,
+    this.isHolographic = false,
+    this.holoConfig,
     this.bankLogo,
     this.enableTilt = true,
     this.onTap,
@@ -339,6 +349,24 @@ class _HorizontalCardState extends State<HorizontalCard>
                                     onCardNumberCopied:
                                         widget.onCardNumberCopied,
                                   ),
+
+                            // Dynamic Holographic Diffraction Foil Layer
+                            if (widget.isHolographic ||
+                                widget.holoConfig != null)
+                              Positioned.fill(
+                                child: IgnorePointer(
+                                  child: CustomPaint(
+                                    painter: HorizontalHoloFoilPainter(
+                                      tiltX: activeTiltX,
+                                      tiltY: activeTiltY,
+                                      config: widget.holoConfig ??
+                                          const HoloFoilConfig(),
+                                      borderRadius:
+                                          widget.cardTheme.borderRadius,
+                                    ),
+                                  ),
+                                ),
+                              ),
 
                             // Dynamic Specular Glare Layer
                             Positioned.fill(
