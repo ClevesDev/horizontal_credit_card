@@ -55,6 +55,18 @@ Engineered with interactive 3D perspective physics, gyroscopic specular reflecti
 
 ---
 
+## Architecture & Design Patterns
+
+`horizontal_credit_card` is engineered using classical software patterns tailored to Flutter's reactive tree:
+* **Composite Pattern:** Hierarchical composition from the root `HorizontalCard` through 3D rim extruders down to atomic vector leaf nodes (`BrandLogo`, `EmvChip`).
+* **Observer & Controller Pattern:** Decoupled `DynamicCvvController` and `DynamicCvvConfig` managing rotating security codes without triggering global widget re-renders.
+* **Strategy & Factory Pattern:** Extensible theme configurations and pre-calibrated `CardPresets`.
+* **Procedural Vector Pipeline:** GPU-direct shaders and `CustomPainter` implementations with strict repaint boundaries.
+
+For comprehensive technical rationale, sequence models, and affine $4\times4$ projection formulas, read the [Architectural Specification](doc/ARCHITECTURE.md).
+
+---
+
 ## Getting Started
 
 Add `horizontal_credit_card` to your `pubspec.yaml`:
